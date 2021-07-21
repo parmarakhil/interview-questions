@@ -1,17 +1,3 @@
-Canadian Tire
-	
-Azure
-Java 11
-Spring core, MVC , boot, Integration, Cloud, Data JPA
-SQL
-Performance tuning
-REST
-JMS, Azure Service bus
-Git
-Sonar
-Docker
-CI/CD
-
 
 1. Spring Core IOC (Inversion of control)
     1. Spring context library
