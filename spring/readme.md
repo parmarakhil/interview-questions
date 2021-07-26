@@ -208,3 +208,36 @@
             1. All above operations
     8. Criteria API
         1. The criteria api is a specification that provides type-safe and portable criteria queries written using java programming language APIs. It is alternative method for defining JPA queries. 
+8. Session management
+    1. Is the process of securely handling multiple requests to a web based application from a single user
+    2. A session is a series of HTTP requests and transactions created by the same user
+    3. Session handling can be done in following ways
+        1. Cookies
+            1. Is a data sent from website and saved by the user’s web browser on the user’s computer as the user browses
+        2. Hidden form field
+            1. Is a hidden data which will not be shown to user and can not be modified. 
+            2. However, when the user submits the form, hidden data would be sent
+        3. URL Rewriting
+            1. Is a method of modifying the URL parameters
+        4. HttpSession
+            1. Enables data to be associated with individual visitors
+    4. In a distributed system we manage session by
+        1. Sticky session
+            1. In this type of session, load balancer would always route same client request to same node.
+            2. But here if the node goes down, session would also be gone
+        2. Session Replication
+            1. To overcome sticky session problem, session replication replicates session data to multiple servers.
+            2. So in case node goes down, session data would always be available with other nodes
+        3. Session data in persistent datastore
+            1. In this session would not be stored in server memory, instead, it will be store in DB with unique ID called session ID
+9. To Instantiate a class from a third-party library as spring bean
+    1. Use @Configuration on class and then @Bean on method which will create the bean
+10. Exception handling using RestControllerAdvice
+    1. Rest API developer will have 2 requirements related to error handling
+        1. Common place for error handling
+        2. Similar error response body with proper HTTP status code across APIs
+    2. We have to create a class and annotate it with @RestControllerAdvice
+    3. Then we need to create method for each type of exception handling
+    4. Annotate these methods with @ExceptionHandler( value = ExceptionType.class)
+    5. ExceptionHandler can be used in a single controller also but that will limit the method usage to that controller
+

@@ -193,3 +193,16 @@
         1. Avoid nested locks
         2. Lock only what is required
         3. Avoid waiting indefinitely: use join() method with a certain time period
+
+17. Immutable class
+    1. Immutable objects are instances whose state doesn’t change after it has been initialised 
+    2. Benefits
+        1. Good for caching purposes because you don’t have to worry about the value changes
+        2. It is inherently thread safe
+    3. To create immutable class
+        1. Declare the class a final so it can’t be extended
+        2. Make all fields private so that direct access is not allowed
+        3. Don’t provide setter methods for variables
+        4. Make all mutable fields final so that its value can be assigned only once
+        5. Initailise all fields via a constructor performing deep copy
+        6. Perform cloning of objects in the getter methods to return a copy rather than the actual object reference
