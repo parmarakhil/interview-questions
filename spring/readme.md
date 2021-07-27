@@ -57,6 +57,58 @@
         1. This provides routing information and informs spring that any HTTP request matching the URL must be mapped to respective method
     9. @RestController
         1. This is applied to a class to mark it as a request handler thereby creating Restful web services using spring mvc. This annotation adds the @ResponseBody and @Controler annotation to class
+    10. @Lookup
+        1. A method annotated with @Lookup tells spring to return an instance of the method's return type when we invoke it
+        2. Spring will override our annotated menthod and use our method's return type and parameters as arguments to BeanFactory.getBean
+        3. Useful for
+            1. Injecting a prototype bean into a singleton bean (Similar to provider)
+                eg:
+                @Component
+                @Scope("prototype")
+                public class Address{
+
+                }
+                @Component
+                public class Person{
+                    //members, variables etc
+
+                    @Lookup
+                    public Address getAddress(){
+                        return null;
+                    }
+                    //getters, setters etc
+                }
+            2. Injecting dependency procedurally
+                eg:
+                   @Component
+                    @Scope("prototype")
+                    public class Address{
+                    
+                        private String area;
+
+                        public Address(String area){
+                            //set fields
+                        }
+
+                        //getters and setters
+
+                    } 
+
+                    public abstract class PersonnServices{
+
+                        @Lookup
+                        protected abstract Address getAddress(String area);
+                    }
+
+                    At runtime, spring will implement the method in the same way with a couple of additional tricks
+                    First, note that it can call a complex constructor as well as inject other spring beans, allowing us to treat Address a bit more like spring-aware method
+                    It does this by implementing getAddress with a call to beanFactory.getBean(Address.class,area)
+                    Second, we can sometimes make the @Lookup annotated emthod abstract
+                    Using abstract is a bit nicer than a stub but we can only use it when we don't component-scan or @Bean-manage the surrounding bean
+        4. Limitations
+            1. @Lookup annotated method like getAddress must be concrete when the surrounding class like Person is component-scanned. This is because component scanning skips abstract beans
+            2. @Lookup annotated method won't work at all when the suurrounding class is @Bean-managed
+            In such circumstances we need to use Provider as an alternative
 3. Spring MVC
     1. Spring MVC is request driven framework
     2. The MVC Model-View-Controller architecture separates and provides loose coupling between different aspects of the application- input logic (Model), business logic (controller) and UI logic (view)
