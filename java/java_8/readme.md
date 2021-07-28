@@ -24,6 +24,95 @@ Java 8 features
     4. Collection is an. In-memory data structure to hold values and before we start using collection, the values should be populated. Whereas a java Stream is a data structure that is computed on demand
     5. Java Stream doesn’t store data it operates on the source data structure and produce pipelined data that can be used to perform specific operation.
     6. Java streams are consumable, so there is no way to create a reference to stream for future use. Since data is on-demand it is not possible to use stream multiple times
+    Java Streams
+    7. There are many ways to create a stream, once created the instance will not modify its source therefore allowing creation of multiple instances from a single source
+        1. Empty stream
+            1. Use the empty() method 
+                1. Stream<String> emptyStream= Stream.empty();
+        2. Stream of collection
+            1. Stream<String> streamOfCollection = myCollection.stream();
+        3. Stream of array
+            1. Stream<String> streamOfArray=Stream.of(“a”,”b”,”c”);
+            2. Stream<String> streamOfArrayFull =  Arrays.stream(myArray);
+            3. Stream<String> streamOfArrayPart =  Arrays.stream(myArray,1,3);
+        4. Stream.builder()
+            1. When builder is used the desired type should be additionally specified in the right part of the statement
+                1. Stream<String> streamBuilder = Stream.<String>builder().add(“a”).add(“b”).add(“c”).build();
+        5. Stream.generate()
+            1. The generate() method accepts a supplier<T> for element generation. As the resulting stream is infinite, the developer should specify the desired size
+                1.  Stream<String> streamGenerated = Stream.generate(() -> "element").limit(10);
+        6. Stream.iterate()
+            1. The first element of resulting stream is the first parameter of the iterate() method
+                1.  Stream<Integer> streamIterated = Stream.iterate(40, n -> n + 2).limit(20);
+        7. Stream of primitives
+            1. As Stream<T> is a generic interface and there is no way to use primitives as a type parameter with generics, 3 special interfaces were created. IntStream, LongStream, DoubleStream
+            2.  IntStream intStream = IntStream.range(1, 3);
+            3.  LongStream longStream = LongStream.rangeClosed(1, 3);
+            4. range(int startInclusive, int endExclusive)
+            5. rangeClosed(int startInclusive, int endInclusive);
+        8. Stream of string
+            1.  IntStream streamOfChars = "abc".chars();
+            2.   Stream<String> streamOfString = Pattern.compile(", ").splitAsStream("a, b, c");
+        9. Stream of file
+            1.  Path path = Paths.get("C:\\file.txt");
+            2. Stream<String> streamOfStrings = Files.lines(path);
+            3. Stream<String> streamWithCharset =   Files.lines(path, Charset.forName("UTF-8"));
+    8. Referencing a stream
+        1. We can instantiate a stream and have an accessible reference to it, as long as only intermediate operations are called. 
+        2. Executing a terminal operation makes a stream inaccessible
+        3.  Stream<String> stream =   Stream.of("a", "b", "c").filter(element -> element.contains("b"));
+        4. Optional<String> anyElement = stream.findAny();
+        5. This will work fine
+        6. Optional <String> firstElement = stream.findFirst(); 
+        7. This will throw IllegalStateException as once a terminal operation is used. The stream is closed
+        8. Java 8 streams can’t be reused
+    9. Stream pipeline
+        1. To perform a sequence of operations over the elements of data source
+        2. We need three parts source, intermediate operations and a terminal operation
+        3. A stream by itself is worthless, the user is interested in the result of terminal operation
+        4. We can only use one terminal operation per stream
+    10. Lazy Invocation
+        1. Intermediate operations are lazy
+        2. They will be invoked only if it is necessary for the terminal operation execution
+        3.  List<String> list = Arrays.asList(“abc1”, “abc2”, “abc3”); counter = 0; Stream<String> stream = list.stream().filter(element -> {    wasCalled();    return element.contains("2");  });
+        4. There the filter method won’t be called even once. The reason why is missing of terminal operation
+    11. Order of Execution
+        1. From performance point of view, the right order is one of the most important aspects of chaining operations in stream pipeline
+        2.  long size = list.stream().skip(2).map(element -> {    wasCalled();     return element.substring(0, 3); }).count();
+        3. The intermediate operations which reduce the size of the stream should be placed before operations which are applying toe act element
+    12. Stream Reduction
+        1. Stream has many terminal operations which aggregate a stream to a type or a primitive eg: sum(), count(), min(), sum()
+        2. If custom implementation is needed we can use reduce() and collect() methods
+        3. The reduce() method
+            1. There are 3 variations of this method which differs by their Signatures and returning types
+            2.  identity – the initial value for an accumulator, or a default value if a stream is empty and there is nothing to accumulate
+            3.  accumulator – a function which specifies the logic of the aggregation of elements. As the accumulator creates a new value for every step of reducing, the quantity of new values equals the stream's size and only the last value is useful. This is not very good for the performance.
+            4.  combiner – a function which aggregates the results of the accumulator. We only call combiner in a parallel mode to reduce the results of accumulators from different threads.
+            5.  OptionalInt reduced =  IntStream.range(1, 4).reduce((a, b) -> a + b);
+            6.  int reducedTwoParams =  IntStream.range(1, 4).reduce(10, (a, b) -> a + b);
+            7.  int reducedParallel = Arrays.asList(1, 2, 3).parallelStream().reduce(10, (a, b) -> a + b, (a, b) -> {       log.info("combiner was called");    return a + b; });
+            8. To make a combiner work, a stream should be parallel
+        4. The collect() method
+            1. It accepts an argument of type Collector
+            2.   List<Product> productList = Arrays.asList(new Product(23, "potatoes"), new Product(14, "orange"), new Product(13, "lemon"),  new Product(23, "bread"), new Product(13, "sugar"));
+            3.  Converting a stream to the Collection (Collection, List or Set): List<String> collectorCollection = productList.stream().map(Product::getName).collect(Collectors.toList());
+            4.  Reducing to String: String listToString = productList.stream().map(Product::getName) .collect(Collectors.joining(", ", "[", "]"));
+            5. The joiner() method can have from one to three parameters (delimiter, prefix, suffix). The most convenient thing about using joiner() is that the developer doesn't need to check if the stream reaches its end to apply the suffix and not to apply a delimiter. Collector will take care of that.
+            6. Processing the average value of all numeric elements of the stream: double averagePrice = productList.stream().collect(Collectors.averagingInt(Product::getPrice));
+            7.  Processing the sum of all numeric elements of the stream: int summingPrice = productList.stream().collect(Collectors.summingInt(Product::getPrice));
+            8.  The methods averagingXX(), summingXX() and summarizingXX() can work with primitives (int, long, double) and with their wrapper classes (Integer, Long, Double). One more powerful feature of these methods is providing the mapping. As a result, the developer doesn't need to use an additional map() operation before the collect() method.
+            9.  Collecting statistical information about stream’s elements: IntSummaryStatistics statistics = productList.stream().collect(Collectors.summarizingInt(Product::getPrice));
+            10. By using the resulting instance of type IntSummaryStatistics, the developer can create a statistical report by applying the toString() method. The result will be a String common to this one “IntSummaryStatistics{count=5, sum=86, min=13, average=17,200000, max=23}.”
+            11. It is also easy to extract from this object separate values for count, sum, min, and average by applying the methods getCount(), getSum(), getMin(), getAverage(), and getMax(). All of these values can be extracted from a single pipeline.
+            12. Grouping of stream’s elements according to the specified function: Map<Integer, List<Product>> collectorMapOfLists = productList.stream().collect(Collectors.groupingBy(Product::getPrice));
+            13. In the example above, the stream was reduced to the Map, which groups all products by their price.
+            14. Dividing stream’s elements into groups according to some predicate: Map<Boolean, List<Product>> mapPartioned = productList.stream().collect(Collectors.partitioningBy(element -> element.getPrice() > 15));
+            15. Pushing the collector to perform additional transformation: Set<Product> unmodifiableSet = productList.stream().collect(Collectors.collectingAndThen(Collectors.toSet(),  Collections::unmodifiableSet);
+    13. Parallel Streams
+        1. The api allows to create parallel streams
+        2. If source is collection or array, parallelStream() method can be sued
+        3. If source is something else parallel() method can be used
+        4. Under the hood, the api uses ForkJoin framework to execute operations in parallel.
 5. Java Time API
     1. Java.time package streamlines the process of working with time in java
     2. The Time API prefers menus over integer constants for months and days of the week
