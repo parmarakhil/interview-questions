@@ -230,17 +230,27 @@
                 3. Read-write —> caching will work for read and write, can be used simultaneously
                 4. Transactional —> caching will work for transaction (Only for JBoss)
 18. Hibernate LifeCycle
-    1. Contains following states
+    1. The persistent context sits between client code and data store
+    2. It is a staging area where persistent data is converted to entities, ready ti be read and altered by client code
+    3. The persistence context is an implementation of unit of work pattern. It keeps track of all loaded data, tracks changes of that data and its responsible to eventually synchronise any changes back to the database at the end of business transaction
+    4. JPA entityManager and Hibernate’s session are an implementation of the persistence context concept
+    5. Managed entity
+        1. It is a representation of database table row
+        2. This is managed by the currently running session and every change made on it will be tracked and propagated to database automatically
+        3. On call to transaction commit() or flush(), the session will find any dirty entities from its tracking list and synchronise the state to the database
+    6. Contains following states
         1. Transient
         2. Persistent
         3. Detached
-    2. Transient state
+    7. Transient state
         1. It is initial state of an object
         2. Once we create an instance of a POJO class, the object enters transient state
         3. Here object is not associated with any session, so transient state is not related to database
         4. Modification in data doesn’t affect any changes in database
         5. Transient objects only exits in heap memory. They are independent of hibernate
-    3. Persistent state
+        6. It is simply an entity object that has no representation in the persistent store and is not managed by any session
+        7. 
+    8. Persistent state
         1. As soon as object is associated with a session it enters persistent state
         2. When we save or persist object
         3. Each object represent a row in database table
@@ -268,6 +278,12 @@
                 2. Session.clear()
                 3. Session.detach(E)
                 4. Session.evict(E)
+        7. If you set Id of a transient object which is equal to id of detached/persistent object and call session.update(object), session will consider it to be detached entity and work same as how detach entity works
+        8. Session doesn’t distinguish where a re-attached entity originated from
+        9. Deleted entity
+            1. An entity is deleted(removed) state if session.delete(entity) has been called.
+            2. The session marks the entity for deletion
+            3. The DELETE command itself might be issued at the end of the unit of work
 19. Core interfaces of hibernate
     1. Configuration
     2. SessionFactory
@@ -319,3 +335,86 @@
     1. Session flush is the process of synchronising the underlying persistent state held in memory 
     2. Flushing the session simply gets the data in the session synchronised with the database
     3. If a persistent object in the session has value change, it becomes dirty, and session flush will update the database in the running transaction but it. May not commit those changes
+32. JPA entity life cycle events
+    1. Before persist is called for a new entity - @PrePersist
+    2. After persist is called for a new entity - @PostPersist
+    3. Before an entity is removed - @PreRemove
+    4. After an entity has been deleted - @PostRemove
+    5. Before the update operation - @PreUpdate
+    6. After an entity is updated - @PostUpdate
+    7. After an entity has been loaded - @PostLoad
+33. Approach to lifecycle event annotations
+    1. Annotating methods in the entity
+    2. Creating an entityListener with annotated callback methods
+    3. We can use both at the same time
+    4. Callback methods are required to have a void return type
+    5. If we’re using @GeneratedValue to automatically generate our primary keys, we can expect that key to be available in the @PostPersist method
+    6. @PreUpdate is only called if the data is actually changed - that. Is there’s an actual SQL update statement to run
+    7. The @PostUpdate callback its called regardless of whether anything actually changed
+    8. If any of our callbacks for persisting or removing an entity throw an exception, the transaction will be rolled back
+34. JPA @Basic
+    1. A basic type maps directly to a column in the database
+    2. The @Basic annotation on a field or a property signifies that its a basic type and Hibernate should use the standard mapping for its persistence
+    3. It’s an optional annotation
+    4. When we don’t specify the @Basic annotation for a basic type attribute, it is implicitly assumed, and the default values of this annotation apply
+    5. @Basic annotation has two attributes
+        1. Optional
+            1. The optional attribute is a boolean parameter that defines whether the marked field or property allows null
+            2. It defaults to true
+        2. Fetch
+            1. Accepts a member of the enumeration Fetch which specifies whether the marked field or property should be lazily loaded or eagerly fetched 
+35. JPA @Basic vs @Column
+    1. Attributes of the @Basic annotation are applied to JPA entities whereas the attributes of the @COlumn are applied to the database columns
+    2. @Basic annotations optional attribute  defines whether the entity field can be null or not; on the other hand @Column annotation’s nullable attribute specifies whether the corresponding database column can be null
+    3. We can use @Basic to indicate that a field should be lazily loaded
+    4. The @Column annotation allows us to specify the name of the mapped database column 
+36. @Size , @Length @Column(length=value)
+    1. @Size
+        1. @Size is a bean validation annotation
+        2. @Size makes the bean independent of JPA and its vendors such as hibernate, As a result this is more portable than @Lenght
+    2. @Length
+        1. It is hibernate-specific version of @Size
+    3. @Column(length=value)
+        1. Used to indicate specific characteristics of physical database column.
+        2. It doesn’t provide validations
+        3. We can use @Column together with @Size to specify database column properly and also have validation
+37. JPA @Embedded and @Embeddable
+    1. If we have attributes in our class which can be abstracted out to a septette class but we don’t want to create a separate table for those details we can use 
+    2. @Embeddable
+        1. JPA provides the @Embeddable annotation to declare that a class will be embedded by other entities
+    3. @Embedded
+        1. The JPA @Embedded is used to embed a type into another entity
+    4. Now there can be an instance that the new embedded class doesn’t have same attribute name to solve this we have attributes override
+    5. We can use @AttributeOverrides and @AttribuuteOverride to override the column properties of our embedded types
+38. Hibernate @NotNull vs @Column(nullable=false)
+    1. Both are used to prevent null data
+    2. The @NotNull annotation is defined in the bean validation specification. This means it is not limited only to entities
+    3. The hibernate doesn’t trigger the SQL insert statement of data is invalid because the pre-persist entity lifecycle event triggered the bean validation just before send the query to database
+    4. Out of the box hibernate translates the bean validation annotations applied to the entities into the DDL schema metadata
+    5. If we don’t want hibernate to automatically create schema with validations we need to set hibernate.validator.apply_to_ddl property to false
+    6. @Column(nullable=false) is defined as part of JPA specification. It will also create the schema with validations as it use hibernate
+    7. Hibernate is able to perform the validation of the entity against the possible null values even if the corresponding field is annotated only with @Column(nullable=false)
+    8. We should prefer @NotNull over @Column(nullable=false)
+
+
+
+1. Association
+    1. Association is relation between two separate classes through their objects
+    2. One to one
+    3. One to many
+    4. Many to one
+    5. Many to many
+    6. Composition and aggregation are two forms of association
+2. Aggregation
+    1. It is weak association
+    2. It represents Has-A relationship
+    3. It is unidirectional association
+    4. In aggregation both the entires can survive individually 
+    5. Code reuse is best achieved by aggregation
+3. Composition
+    1. It is strong association
+    2. Composition is a restricted form of aggregation in which two entities are highly dependent on each other
+    3. It represent part-of relationship
+    4. Both entities depend on each other
+    5. Composed object cannot exists without the other entity
+
