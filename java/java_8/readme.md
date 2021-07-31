@@ -113,6 +113,22 @@ Java 8 features
         2. If source is collection or array, parallelStream() method can be sued
         3. If source is something else parallel() method can be used
         4. Under the hood, the api uses ForkJoin framework to execute operations in parallel.
+        5. When to use parallel stream
+            1. Must be used only with stateless, non-interfering and stateless operations
+            2. A stateless operation is an operation in which the state of one element does not affect other element
+            3. A non-interfering operationn is an operation in which data source is not affected
+            4. An associative operation is an operation in which the result is not affected by order of operands
+            5. They should be used when the output of the operation is not needed to be dependent on the order of elements present in source collection
+            6. Parallel streams can be used in case of aggregate functions
+            7. Parallel streams quickly iterate over the large sized collections
+            8. Parallel streams can be used if developers have performance implications with he sequential streams
+            9. If the environment is not multi threaded, then parallel stream creates thread and can affect the new requests coming in
+        6. Performance implications
+            1. Since each sub-stream is a single threaded running and acting on the data, it has overhead compared to sequential stream
+            2. Inter thread communication is dangerous and takes time for coordination
+        7. Parallel stream internally uses Fork-Join framework
+        8. The Fork-Join framework is in charge of splitting the. Source data between worker threads and handling callback on task completion
+        9. Arrays or array list are best for parallel streams, followed by Treemap and hashes, the worst is linked list       
 5. Java Time API
     1. Java.time package streamlines the process of working with time in java
     2. The Time API prefers menus over integer constants for months and days of the week
