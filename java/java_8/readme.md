@@ -139,9 +139,20 @@ Java 8 features
     4. Map replaceAll(), compute(), merge() methods
     5. Collections framework is the architecture to represent and manipulate data in java in a standard way
     6. Collection interface is the root of the collection hierarchy. A collection represents a group of objects known as its elements. The java platform doesn’t provide any direct implementations of this interface.
+    7. The hashMap internal working was also improved by using a binary tree inplace of linkedlist when the hashmap reaches certain threshold usually 75%
 7. Concurrency API improvements
     1. ConcurrentHashMap compute() forEach(), forEachEntry(), forEachKey(), forEachValue(), merge(), reduce(), search() methods
     2. CompletableFuture that may be explicitly completed
     3. Executors newWorkStealingPool() method to create a work-stealing thread pool available processors as its target parallelism level
+    4. It provide atomic classes such as AtomicInteger, Atomic operations are performed in a single unit of task without interference from other operations. Atomic operations are necessity in multi-threaded environment to avoid data inconsistency
+    5. Lock interface provides more extensive locking operations that can be obtained using synchronized methods and statements. They allow more flexible structuring, may have quite different properties and may support multiple associated Condition objects. The advantages are
+        1. It is possible to make them fair
+        2. It is possible to make a thread responsive to thread interruptions while waiting on a Lock object
+        3. It is possible to try and acquire a lock but return immediately or after a timeout if the lock can't be acquired
+        4. It is possible to acquire and release locks in different scopes and in different orders
+    6. java.util.concurrent.BlockingQueue is a Queue that supports operations that wait for the queue to become non-empty when retrieving and removing an element, and wait for space to become available in the queue when adding an element. BlockingQueue doesn’t accept null values and throw NullPointerException if you try to store null value in the queue. BlockingQueue implementations are thread-safe. All queuing methods are atomic in nature and use internal locks or other forms of concurrency control. BlockingQueue interface is part of the Java collections framework and it’s primarily used for implementing the producer-consumer problem.
+    7. Callable interface in concurrency package that is similar to Runnable interface but it can return any Object and able to throw Exception. The Callable interface uses Generics to define the return type of Object. Executors class provide useful methods to execute Callable in a thread pool. Since callable tasks run in parallel, we have to wait for the returned Object. Callable tasks return java.util.concurrent.Future object. Using Future we can find out the status of the Callable task and get the returned Object. It provides the get() method that can wait for the Callable to finish and then return the result.
+    8. FutureTask is the base implementation class of Future interface and we can use it with Executors for asynchronous processing. Most of the time we don’t need to use FutureTask class but it comes real handy if we want to override some of the methods of Future interface and want to keep most of the base implementation. We can just extend this class and override the methods according to our requirements.
+    9. Java Collection classes are fail-fast which means that if the Collection will be changed while some thread is traversing over it using iterator, the iterator.next() will throw ConcurrentModificationException. Concurrent Collection classes support full concurrency of retrievals and adjustable expected concurrency for updates. Major classes are ConcurrentHashMap, CopyOnWriteArrayList and CopyOnWriteArraySet
 8. Method reference
     1. Method reference is used to refer method of functional interface. Each time when you are using lambda expression to just refer a method you can use method references
