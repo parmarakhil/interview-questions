@@ -1,4 +1,4 @@
-#Microservices
+# Microservices
 
 1. What is spring cloud?
     1. Provides cloud to quickly build common patterns in distributed systems
@@ -266,9 +266,9 @@
     1. Is an open source framework for batch processing - execution of a series of jobs
     2. Spring batch provide classes and APIs to read/write resources, transaction management, job processing statistics, job restart and partitioning techniques to process high volume data
 34. Tasklet & Chunk
-    1. The tasklebt is a simple interface with one method to execute.
-    2. A tasklebt can be used to perform single tasks like running queries, deleting files etc
-    3. In spring batch, the tasklebt is an interface that can be used to perform unique tasks like clean or set up resources before or after any step execution
+    1. The tasklet is a simple interface with one method to execute.
+    2. A tasklet can be used to perform single tasks like running queries, deleting files etc
+    3. In spring batch, the tasklet is an interface that can be used to perform unique tasks like clean or set up resources before or after any step execution
     4. Chunk:
         1. Spring batch uses a ‘Chunk Oriented’ processing style within its most common implementation. 
         2. Chunk Oriented Processing refers to reading the data one at a time and creating chunks that will be written out, within a transaction boundary
@@ -338,6 +338,20 @@
         6. Brings business & service together
         7. Context focussed
         8. Ubiquitous language
+    5. Microservices have a symbiotic relationship with domain-driven-design (ddd) a design approach where the business domain is carefully modelled in software and evolved over time, independently of the plumbing that makes the system work
+    6. Domain driven design is used to define the different bounded context which represent the various business processes that the application needs to perform. These are joined together with events, creating a unidirectional dependency graph that decouples each bounded context from that arise downstream to create rich event streaming business application
+    7. DDD is built on the following premises
+        1. Capture the domain model, in domain terms, through interactions with domain experts
+        2. Embed the domain terminology in the code
+        3. Protect the domain knowledge from corruption by other domains, technical subdomains etc
+    8. Bounded context is one of the main concept. DDD prescribes that we explicitly define the context within which a model is applied. We are required to set boundaries in terms of which team owns that model, usage within specific parts of the application and physical manifestations such as code bases and database schemas. 
+    9. Keeping the models strictly consistent within these bounds makes each part simpler to implement and understand, because we only need worry about a single bounded context. We aren’t distracted or confused by code that may have leaked in from others
+    10. Anti-corruption layer is used to tackle with challenges of domain model changes which can lead to issues in other services
+        1. Anti corruption layer is a layer that maps the data used in a domain model to the data transmitted between different microservices or different bounded contexts. 
+        2. This pattern is implementation agnostic, meaning it can be used regardless of whether your services communicate through events or with a request-response protocol. 
+        3. It has two goals
+            1. It insulates the domain model from changes
+            2. It encapsulates the boundary between context, describing how they map both in a technical sense - field A in a message maps to field B in the model
 46. Ubiquitous language
     1. It is a common language used by developers and users of a specific domain through which the domain can be explained easily
     2. The Ubiquitous language has to be crystal clear so that it brings all the team members on the same page and also translates in such a way that machine can understand
@@ -353,3 +367,14 @@
     3. This results in developing and sharing the libraries which in turn result in tight coupling
 50. Cross functional testing
     1. Is a verification of non functional requirements I.e those requirements which cannot be implemented like normal feature
+51. Microservices communication
+    1. Most people start with the REST approach. This works well for many use cases however the request-response pattern creates point-to-point connections that couple both sender to receiver and receiver to sender, making it hard to change one component without impacting others
+    2. Due to this, Many architects use middleware as backbone for MS communication to create decoupled, scalable and highly available systems. 
+        1. Messaging systems like RabbitMQ
+        2. ETL tool like Talent
+        3. ESB like WSO2
+        4. Event streaming platform like Apache Kafka
+    3. The main reason Apache Kafka became the de facto standard for MS is its combination of three powerful concepts
+        1. Publish and subscribe : to streams of events, similar to message queue or enterprise messaging systems
+        2. Store : streams of events in a fault-tolerant way
+        3. Process : streams of events in real time as they occur
