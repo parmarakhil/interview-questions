@@ -1,4 +1,4 @@
-#SQL
+# SQL
 
 1. DBMS
     1. Database Management System is a system software responsible for creation, retrieval, updation and manipulation of database
