@@ -115,4 +115,18 @@
     4. Here localhost:5000 is the location of private repository
     5. To push the repository to private repository
         1. docker push <privaterRepo>/<repoName> 
+13. Instruction command
+    1. CMD
+        1. This command is used to execute a command at runtime when the container is executed.
+        2. CMD command param1 
+    2. ENTRYPOINT
+        1. This command can also be used to execute commands at runtime for the container. But we can be more flexible with the ENTRYPOINT command
+        2. ENTRYPOINT command param1
+    3. ENV
+        1. This command is used to set environment variables in the container.
+        2. ENV key value
+    4. WORKDIR
+        1.  This command is used to set the working directory of the container.
+        2. WORKDIR dirname
+
 
