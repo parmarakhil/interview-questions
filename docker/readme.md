@@ -128,5 +128,89 @@
     4. WORKDIR
         1.  This command is used to set the working directory of the container.
         2. WORKDIR dirname
+14. Storage drivers
+    1. Docker has multiple storage drivers that allow one to work with the underlying storage devices
+    2. AUFS
+        1. It is a stable driver and can be used for production ready applications
+        2. It has good memory usage and is good for ensuring a smooth docker experience for containers
+        3. There is a high-write activity associated with this driver which should. Be considered
+        4. Its good for systems which are of platform as a service type work
+    3. Devicemapper
+        1. A stable driver to ensure smooth docker experience
+        2. Good for testing applications
+        3. The driver is in line with the main linux kernel functionality
+    4. Btrfs
+        1. This driver is in line with main linux kernel functionality
+        2. There is high-write activity associated with this driver which should. Be considered
+        3. This driver is good for instances where you maintain multiple build pools
+    5. Ovelay
+        1. Stable driver, inline with main linux kernel functionality and good memory usage
+        2. Good for testing applications
+    6. ZFS
+        1. Stable driver, good for testing applications
+        2. Good for systems which are PAAS type
+    7. To see the storage driver being used, use “docker info” command
+15. Data volumes
+    1. In docker, you have a separate volume that can be shared across containers. These are known as data volumes
+    2. There are initialised when container is created
+    3. They can be shared and also reused amongst many containers
+    4. Any changes to volume itself can be made directly
+    5. They. Exist even after the container is deleted
+    6. If you want to change the storage driver used for a container, you can do so when launching the container by using “—volume-driver” parameter
+    7. Creating. Volume
+        1. A volume can be created before hand using docker command
+        2. Docker volume create —name=volumename —opt options
+    8. Listing all volumes
+        1. To list all docker volumes on a docker host use “docker volume ls”
+16. Networking
+    1. Docker take care of networking aspects
+    2. A docker ethernet adapter is created when docker is installed on docker host
+    3. This is a bridge between docker host and linux host
+    4. Listing all docker networks
+        1. This command can be used to list all the network associated with docker on the host
+        2. Docker network ls
+    5. Inspecting a docker network
+        1. Use “docker network inspect network name”
+    6. Create own network
+        1. Docker network create —driver drivername name
+17. Docker toolbox
+    1. Docker engine
+        1. Used as the base engine or docker daemon that is used to run docker containers
+    2. Docker machine
+        1. For running docker machine commands
+    3. Docker compose
+        1. For running docker compose commands
+    4. Kinematic
+        1. Docker GUI built for windows and Mac OS
+    5. Oracle virtualbox
+18. Docker cloud
+    1. Docker cloud is a service provided by docker in which you. Can carry out the following operations
+    2. Nodes
+        1. You can connect the docker cloud to your existing cloud providers such as Azure and AWS to spin up containers on these environments
+    3. Cloud repository
+        1. Provides a place where you can store your own repositories
+    4. Continuous integration
+        1. Connect with GitHub and build a continuous integration pipeline
+    5. Application development
+        1. Deploy and scale infrastructure and containers
+    6. Continuous deployment
+        1. Can automate deployment
+19. Logging
+    1. Docker provides logging at daemon level and container level
+    2. Daemon logging
+        1. Debug
+            1. It details all the possible information handled baby the daemon process
+        2. Info
+            1. It details all the errors+information handled by the daemon process
+        3. Errors
+            1. It details all the errors handled by the daemon process
+        4. Fatal
+            1. It only details all fatal errors handled by daemon process
+    3. Container logging
+        1. Docker logs containerID
+20. Docker compose
+    1. Used to run multiple containers as a single service without the need to start each one separately 
+    2. docker-compose version 
+    3. All docker compose files are YAML files
 
 
