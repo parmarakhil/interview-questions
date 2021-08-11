@@ -1,4 +1,3 @@
-
 # Docker
 
 1. Docker is a container management service. 
@@ -54,30 +53,37 @@
             1. Docker unpause <containerID>
         8. To kill the processes in a running container
             1. Docker kill <containerID>
-6. Docker container life cycle
+    8. A container is a standard unit of software bundled with dependencies so that applications can be deployed fast and reliably b/w different computing platforms
+    9. Docker container doesn’t require the installation of a separate operating system. Docker just relies or makes use of the kernel’s resources and its functionality to allocate them for the CPU and memory it relies on the kernel’s functionality and uses resource isolation for CPU and memory and separate namespaces to isolate the application’s view of the OS
+6. Docker namespace
+    1. A namespace is basically a linux feature that ensures OS resources partition in a mutually exclusive manner.
+    2. This forms the core concept behind containerisation as namespaces introduce a layer of isolation amongst the containers.
+    3. In docker, the namespaces ensure that the containers are portable and they don’t affect the underlying host
+    4. Examples for namespace types that are currently being supported by docker - PID, Mount, User, network IPC
+7. Docker container life cycle
     1. Created —> initial state
     2. Running —> goes into running state when docker run command is used
     3. Killed —> the kill command is used to kill an existing docker container
     4. Paused -> pause command is used to pause an existing docker container
     5. Stopped —>  stop command is used to paise an existing docker container
     6. Run command is used to put a container back from stopped state to running state
-7. Traditional Virtualization
+8. Traditional Virtualization
     1.  The server is the physical server that is used to host multiple virtual machines.
     2. The Host OS is the base machine such as Linux or Windows.
     3. The Hypervisor is either VMWare or Windows Hyper V that is used to host virtual machines.
     4. You would then install multiple operating systems as virtual machines on top of the existing hypervisor as Guest OS.
     5. You would then host your applications on top of each Guest OS.
-8. Virtualization using docker
+9. Virtualization using docker
     1. The server is the physical server that is used to host multiple virtual machines. So this layer remains the same.
     2. The Host OS is the base machine such as Linux or Windows. So this layer remains the same.
     3. Now comes the new generation which is the Docker engine. This is used to run the operating system which earlier used to be virtual machines as Docker containers.
     4. All of the Apps now run as Docker containers.
-9. Configuring docker
+10. Configuring docker
     1. To stop the docker daemon process
         1. Service docker stop
     2. To start docker daemon process
         1. Service docker start
-10. To attach a container and exit them cleanly without destroying the container we can use “nester”
+11. To attach a container and exit them cleanly without destroying the container we can use “nester”
     1. This method allows one to attached to a container without exiting the container
     2. Syntax
         1. Nester -m -u -n -p -I -t <containerID> <command>
@@ -89,7 +95,7 @@
         7. -t is used to connect the I/O streams of the container to the host OS.
         8. containerID − This is the ID of the container.
         9. Command − This is the command to run within the container.
-11. Docker files
+12. Docker files
     1. To create our own docker images we can use docker files
     2. The name of the file used should be “Dockerfile”
     3. Some points
@@ -108,14 +114,14 @@
         1. Docker tag <ImageID> <RepositoryName>
     6. TO push images to docker hub
         1. Docker push <repositroyName>
-12. Private repository
+13. Private repository
     1. Registry is the container managed by docker which can be used to host private repositories
     2. In the run command -d option is used to run the container in detached mode. This is so that the container can run in the background
     3. docker tag <ImageID> localhost:5000/<repositoryName>
     4. Here localhost:5000 is the location of private repository
     5. To push the repository to private repository
         1. docker push <privaterRepo>/<repoName> 
-13. Instruction command
+14. Instruction command
     1. CMD
         1. This command is used to execute a command at runtime when the container is executed.
         2. CMD command param1 
@@ -128,7 +134,7 @@
     4. WORKDIR
         1.  This command is used to set the working directory of the container.
         2. WORKDIR dirname
-14. Storage drivers
+15. Storage drivers
     1. Docker has multiple storage drivers that allow one to work with the underlying storage devices
     2. AUFS
         1. It is a stable driver and can be used for production ready applications
@@ -150,7 +156,7 @@
         1. Stable driver, good for testing applications
         2. Good for systems which are PAAS type
     7. To see the storage driver being used, use “docker info” command
-15. Data volumes
+16. Data volumes
     1. In docker, you have a separate volume that can be shared across containers. These are known as data volumes
     2. There are initialised when container is created
     3. They can be shared and also reused amongst many containers
@@ -162,7 +168,7 @@
         2. Docker volume create —name=volumename —opt options
     8. Listing all volumes
         1. To list all docker volumes on a docker host use “docker volume ls”
-16. Networking
+17. Networking
     1. Docker take care of networking aspects
     2. A docker ethernet adapter is created when docker is installed on docker host
     3. This is a bridge between docker host and linux host
@@ -173,7 +179,7 @@
         1. Use “docker network inspect network name”
     6. Create own network
         1. Docker network create —driver drivername name
-17. Docker toolbox
+18. Docker toolbox
     1. Docker engine
         1. Used as the base engine or docker daemon that is used to run docker containers
     2. Docker machine
@@ -183,7 +189,7 @@
     4. Kinematic
         1. Docker GUI built for windows and Mac OS
     5. Oracle virtualbox
-18. Docker cloud
+19. Docker cloud
     1. Docker cloud is a service provided by docker in which you. Can carry out the following operations
     2. Nodes
         1. You can connect the docker cloud to your existing cloud providers such as Azure and AWS to spin up containers on these environments
@@ -195,7 +201,7 @@
         1. Deploy and scale infrastructure and containers
     6. Continuous deployment
         1. Can automate deployment
-19. Logging
+20. Logging
     1. Docker provides logging at daemon level and container level
     2. Daemon logging
         1. Debug
@@ -208,9 +214,17 @@
             1. It only details all fatal errors handled by daemon process
     3. Container logging
         1. Docker logs containerID
-20. Docker compose
+21. Docker compose
     1. Used to run multiple containers as a single service without the need to start each one separately 
     2. docker-compose version 
     3. All docker compose files are YAML files
-
+22. Hypervisor
+    1. A hypervisor is a software that makes vitalisation happen because of which is sometimes referred to as the virtual machine monitor. 
+    2. This divides the resources of the host system and allocates them to each guest environment installed
+    3. This means that multiple OS can be installed on a single host system
+    4. Types
+        1. Native Hypervisor
+            1. This type is also called a Bare-metal hypervisor and runs directly on the underlying host system which also ensures direct access to the host hardware which is why it does not require base OS
+        2. Hosted Hypervisor
+            1. This type makes use of underlying host operating system which has the existing OS installed
 
