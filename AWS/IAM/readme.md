@@ -60,4 +60,26 @@
     6. Use access keys for programmatic access (cli/sdk)
     7. Audit permissions of your account with IAM credentials report
     8. Groups can contain user only not other groups
+13. You can use IAM policies defined by AWS or you can create your own policies (for stricter control)
+14. You can add inline polices
+    1. These policies cannot be added to other roles
+    2. Not recommended
+15. You can have versions of policies
+16. Policy simulator
+    1. To simulate actions that can be performed by user, group, role or different resources
+17. Ec2 instance metadata
+    1. It allows AWS ec2 instance to learn about themselves without using an IAM role for that purpose
+    2. URL is http://169.254.169.254/latest/meta-data
+    3. Will only work with EC2 instances
+    4. You can retrieve the IAM role name from metadata but your cannot retrieve the IAM policy
+18. AWS SDK
+    1. To perform actions on AWS through code
+    2. Official SDKs are
+        1. Java
+        2. .Net
+        3. Node.js
+        4. PHP
+        5. Python (boto3)
+        6. Go
+    3. If you don’t specify or configure a region, then us-east-1 will be chosen by default
 
