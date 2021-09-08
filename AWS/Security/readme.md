@@ -80,4 +80,96 @@
             2. New key created has different CMK ID
             3. You should keep the previous key active to decrypt old data
             4. It is better to use alias to hide the change of key for the application
-                1. Update Alias to hide the change of key application 
+                1. Update Alias to hide the change of key application
+3. SSM parameter store
+    1. Secure storage for configurations and secrets
+    2. Optionals seamless encryption using KMS
+    3. Serverless, scalable, durable, easy SDK
+    4. Version tracking of configurations
+    5. Integration with cloudformation and has cloudwatch events feature
+    6. Can store plain text configuration
+    7. Can create hierarchy to store parameters
+    8. We can even reference secrets from secrets manager and even reference an AWS asset
+    9. Can integrate with lambda function
+        1. Lambda function should have permissions
+        2. Boto3 client is used to get connection with SSM
+    10. Max size of parameter value is 4KB
+    11. Parameters policies
+        1. eg: Allow to assign TTL to a parameter
+        2. Can assign multiple policies at a time
+    12. Can get parameters by path, also recursively
+    13. To get encrypted configurations in plaintext you need to provide withDecryption Flag
+        1. You /lambda should have access to decrypt the configuration
+4. AWS Secrets Manager
+    1. Used for storing secrets - encrypted using KMS
+    2. Can force rotation of secrets every X days
+    3. Automate generation of secrets on rotation using lambda
+    4. Integration with RDS
+5. Cloud HSM
+    1. Dedicated hardware where you manages your own encryption keys entirely
+    2. AWS will provision the hardware
+    3. HSM is tamper resistant
+    4. Supports both symmetric and asymmetric keys
+    5. You need to use CloudHSM client Software
+    6. Redshift supports cloudHSM for database encryption
+    7. Good option to use with SSE-C encryption
+    8. Have high availability, spread across Multi AZ
+    9. They are single tenant (KMS is multi tenant)
+    10. Can import asymmetric keys (Not possible in KMS)
+    11. Can be shared across VPCs using VPC peering
+6. AWS Shield
+    1. To protect against DDoS attack
+    2. AWS Shield Standard
+        1. Free service
+        2. Provides protection from attacks such as SYN/UDP floods and other layer 3/4 attacks
+    3. AWS shield advance
+        1. Optional DDoS migration service
+        2. Protects against sophisticated attacks on EC2, ELB,CloudFront, Global accelerator and route 53
+        3. 24/7 access to DDoS response team (DRP)
+    4. Protect against higher fees during usage spike due to DDoS
+7. Web Application Firewall (WAF)
+    1. Protects web applications from common web exploits (layer 7 -HTTP)
+    2. Deployed on ALB, API gateway, CloudFront
+    3. Define Web ACL to use WAF
+        1. Rules on IP, HTTP headers, HTTP body
+        2. Protect from common attacks like SQL injection and cross site scripting (XSS)
+        3. Size constraints, geo-match to block specific countries
+        4. Rate based rules (DDoS protection)
+    4. Firewall manager
+        1. Manages rules in all accounts of an AWS Organisation
+        2. Common set of security rules
+8. AWS GuardDuty
+    1. Intelligent threat discovery to protect AWS Account using ML
+    2. Detects anomaly detection, 3rd party data
+    3. Input data
+        1. CloudTrail logs
+            1. To determine unusual API calls, unauthorised deployments
+        2. VPC flow logs
+            1. To determine unusual internal traffic, unusual IP address
+        3. DNS logs
+            1. Compromised EC2 instances, sending encoded data with DNS queries
+    4. Can setup cloudwath event rules to be notified inc are of findings
+        1. Can trigger SNS, Lambda
+    5. Can protect against CryptoCurrency attacks
+9. AWS inspector
+    1. Automated Security Assessments for EC2 Instances
+    2. Analyse running OS against known vulnerabilities
+    3. Need to install AWS Inspector agents
+        1. No need to install for network assessments
+    4. Analyse against unintended network accessibility 
+10. Macie
+    1. It is a fully managed data security and data privacy service that uses machine learning and pattern matching to discover and protect your sensitive data in AWS
+    2. Uses ML in backend
+    3. Helps identify and alert you. Sensitive data eg Personal identifiable information (PII)
+11. Shared Responsibility Model
+    1. AWS responsibility - Security of the cloud
+        1. Protecting infrastructure
+        2. Managed services
+    2. Customer responsibility - Security in cloud
+        1. Usage of resources/services
+        2. Encrypting application data
+    3. Shared controls
+        1. Patch management
+        2. Control management
+
+ 
