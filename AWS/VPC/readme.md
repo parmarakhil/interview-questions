@@ -67,3 +67,84 @@
         5. Requires an IGW (Internet gateway)
         6. 5 Gbps of bandwidth
         7. No security group to manage/required
+7. DNS Resolution in VPC
+    1. EnableDnsSupport 
+        1. DNS Resolution setting, default value is true
+        2. Helps decide if DNS resolution is supported for the VPC
+        3. If true, queries the AWS DNS server at 169.254.169.253
+    2. EnableDnsHostname
+        1. DNS hostname setting, default is false for new VPC and true for default VPC
+        2. Works only If enableDnsSupport is true
+        3. If EnableDnsHostname is true, it will assign public hostname to Ec2 instances if it has a public IP
+    3. If you use custom DNS domain names in private zone in Route 53, you must set. Both these attributes to true
+8. Network ACL Vs Security Group
+    1. Incoming request
+        1. NACL sit outside of subnet, When incoming traffic reaches NACL it is evaluated by the Inbound rules and then the traffic is permitted inside subnet
+        2. Once the traffic is inside subnet, it is evaluated against the inbound rules of Security group before it enters EC2 instance
+        3. Security group requests are stateful that means traffic coming in will go out even if there is an explicit deny.
+        4. Once the traffic reaches subnet level it is evaluated by NACL inbound rules because NACL is stateless
+    2. Outgoing request
+        1. Traffic going out of EC2 is first evaluated by Security group and then traffic reaches subnet level and it is evaluated by NACL
+        2. While traffic comes back it is evaluated by NACL as it is stateless and won’t be evaluated by security group as it is stateful
+    3. Network ACL
+        1. NACL arre like firewall which control traffic from and to subnet
+        2. Default NACL allows everything inbound and outbound
+        3. One NACL per subnet, new subnets are assigned default NACL
+        4. Rules
+            1. Rules have a  number (1—32766) and higher precedence with lower number
+                1. Eg: rule #100 has priority over rule #200
+            2. Last rule is an “*” and denies request in. Case of non rule match
+            3. AWS recommends adding rules by increment of 100
+        5. Newly created NACL will end everything
+        6. NACL are great way of blocking specific IP at subent level
+9. VPC peering
+    1. Connect two VPC privately using AWS network
+    2. CIDR ranges should not overlap
+    3. Help 2 VPC behave as if they were in same network
+    4. VPC peering is not transitive (a-> b, b-> C is not a->c)
+    5. Must update route tables in each VPC subnets to ensure instances can communicate
+    6. Works inter-region, cross-account
+    7. You can reference a Security group of a peered VPC (works cross account)
+10. VPC endpoint
+    1. Helps access AWS global services (Services outside VPC) privately instead of public network
+        1. DynamoDB
+        2. Cloudfront
+        3. S3
+    2. Scales horizontally and redundant
+    3. They remove need of IGW, NAT to access AWS services
+    4. Interface
+        1. Provisions an ENI (private address) as an entry point (Must attack security group) -> most AWS services
+    5. Gateway
+        1. Provisions a target and must be used in route table
+            1. S3
+            2. DynamoDB
+    6. Incase of issues
+        1. Check DNS setting resolution in your VPC
+        2. Check route table
+11. VPC flow logs
+    1. VPC flow log
+        1. Subnet flow log
+            1. Elastic Network interface flow log
+    2. Flow logs data can go to S3 or cloudwatch
+    3. Apart from customer managed services it can also capture logs from AWS managed services
+    4. Log syntax
+        1. Srcaddr, dtsaddr help identify problematic IP
+        2. Srcport, dstport help identify problematic ports
+        3. Action: success or failure of the request due to Security group/NACL
+        4. Can be used for analytics or malicious behaviour
+        5. Query VPC flow logs using Athena on S3 or cloudwatch log insights
+12. Bastion Hosts
+    1. We can use Bastion host to SSH into private instances
+    2. The bastion is in the public subnet which is then connected to all other private subnet
+    3. Bastion host security group must be tightened
+    4. Make sure the bastion host only has port 22 traffic from the IP you need not from the security group of your instances
+    5. Public instance sitting in public instance allowing SSH on port 22 is bastion host
+13. Site to Site VPN
+    1. Connect corporate datacenter to AWS network
+    2. You need to create customer gateway on corporate datacenter
+    3. On AWS side you need to create Virtual private gateway
+    4. Then you can link both using site to site VPN
+14. Virtual Private gateway
+    1. VPN concentrator on the AWS side of the VPN connection
+    2. VGW is created and attached to the VPC which you want to create the site to site VPN connection
+    3. Possibility to customise the ASN
