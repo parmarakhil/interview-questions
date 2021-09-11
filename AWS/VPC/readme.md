@@ -148,3 +148,72 @@
     1. VPN concentrator on the AWS side of the VPN connection
     2. VGW is created and attached to the VPC which you want to create the site to site VPN connection
     3. Possibility to customise the ASN
+15. Customer gateway
+    1. Software application or physical device or customer side of the VPN
+    2. IP address
+        1. Use static, internet-routable IP address for you customer gateway device
+        2. If behind a CGQ behind NAT (with NAT-T), use the public IP address of the Nat
+16. Direct Connect (DX)
+    1. Dedicated private connection from remote network to your VPC
+    2. Dedicated connection must be setup between your DC and AWS connect locations
+    3. You need to setup a virtual private gateway on your VPC
+    4. You can access public resources (S3) and private (EC2) on same connection
+    5. Supports both IPv4 and IPv6
+    6. Connection types
+        1. Dedicated connections
+            1. 1Gbps and 10 Gbps capacity
+            2. Physical ethernet dedicated to a customer
+        2. Hoster connections
+            1. 50 Mbps, 500 Mbps to 19 Gbps
+            2. Connection requests are made via AWS direct connect. Partners
+            3. Capacity can be added or removed on demand
+    7. Takes 1 month to establish
+    8. Data in transit is not encrypted but it is private
+    9. AWS direct connect + VPN provides an IPsec-encrypted private connection
+    10. Resiliency
+        1. High resiliency for critical workloads
+            1. One connection at multiple locations
+        2. Maximum resiliency for critical workload
+            1. Achieved using separate connections terminating on separate devices in more than one location
+17. Direct Connect Gateway
+    1. To setup direct connect to one or more VPC in many different regions of same account
+18. Egress only internet gateway
+    1. Egress means outgoing
+    2. Works only for IPv6
+    3. Similar to NAT but NAT is for IPv4
+    4. IPv6 are all public addresses
+    5. Egress only internet gateway gives our IPv6 instances access the internet but they won’t be directly reachable by the internet
+    6. After creating it you need to edit route table
+19. AWS privatelink
+    1. Solves problem of Exposing services in your VPC to other VPC without making it public and not using VPC peering (opens the whole network)
+    2. AWS privatelink is also called VPC endpoint services
+    3. Most secure & scalable way toe expose a service to many VPC
+    4. Requires a load balancer (Service VPC) and ENI (Customer VPC)
+    5. If the NLB is in Multi AZ and ENI is Multi AZ then solution is fault tolerant
+20. AWS ClassicLink - EC2 Classic
+    1. It is deprecated
+    2. EC2 classic -> instances run in a single network shared with other customers
+    3. Amazon VPC -> Your instances run logically isolated to your AWS account
+    4. ClassicLink 
+        1. Allows you to link EC2 classic instances to a VPC in your account
+        2. Must associate a security group
+        3. Enables communication using private IPv4 addresses
+        4. Removes the need to make use of public IPv4 addresses or Elastic IP addresses
+21. VPN CloudHub
+    1. Provides secure communication between sites, if you have multiple VPN connections
+    2. Low cost hub-and-spoke model for primary or secondary network connectivity between locations
+    3. Its VPN so it goes over public network
+22. Transit Gateway
+    1. For having transitive peering between 1000s of VPC and on-premise, Site-to-site VPN, hub-and-spoke (star) connection
+    2. Regional resource, can work cross region
+    3. Share cross-account using Resource Access Manager (RAM)
+    4. You can peer Transit Gateways across regions
+    5. Route tables - limit which VPC can talk with other VPC
+    6. Works with Direct connect gateway, VPN connections
+    7. Supports IP multicast which is not supported by any other AWS service
+    8. To increase bandwidth of site-to-site VPN using ECMP
+        1. Equal Cost Multi path routing
+        2. Routing strategy to allow to forward a packet over multiple best path
+        3. Use case - Create multiple Site-to-site VPN connections to increase the bandwidth go your connection to AWS
+        4. Share direct connect connection between multiple accounts
+
