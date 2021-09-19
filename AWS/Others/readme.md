@@ -63,3 +63,97 @@
         1. Elastic Beanstalk
         2. Code deploy & cloudformation
     4. Code pipeline for all steps combined
+11. CloudFormation
+    1. Infrastructure as code
+    2. A declarative way off outlining AWS infrastructure for any resource
+    3. Creates resources in right order with the exact configuration you specify
+    4. Code can be versionised using git
+    5. Change to infra are reviewed through code
+    6. Excellent automative control
+    7. You can create many stacks for many apps
+    8. Template is uploaded in S3 and then referenced in cloudformation
+    9. Building blocks
+        1. Resources
+            1. AWS resources declared in the template
+        2. Parameters
+            1. The dynamic inputs for your template
+        3. Mappings
+            1. Static variables for your template
+        4. Outputs
+            1. References to what has been created
+        5. Conditionals
+            1. List fo conditions to perform resource creation
+        6. Metadata
+        7. Helper
+            1. Referencers
+            2. Functions
+    10. StackSets
+        1. Create, update or delete stacks across multiple accounts regions with single operation
+        2. Administrator account to create StackSets
+        3. Trusted accounts to create, update, delete stack instances from stackSets
+        4. When you update a stack set, all associated stack instances are updated thought out all accounts and regions
+12. Step functions
+    1. Build serverless visual workflow to orchestrate lambda functions
+    2. Represent flow as a json state machine
+    3. Can have sequence, parallel, conditions, timeouts etc
+    4. Can also integrate with EC2, ECS, on-premise,APi gateway
+    5. Max execution time is 1 year
+    6. Can implement human approval feature
+13. Simple Workflow service (SWF)
+    1. Corordinate work amongst applications
+    2. Code runs on EC2, not serverless
+    3. Max 1 year runtime
+    4. Concept of “activity step” and “decision step”
+    5. Has built in human intervention step
+    6. Eg: Order fulfilment
+    7. Step functions is recommended to be used for new applications, except
+        1. If you need external signals to intervene in the process
+        2. If you need child processes to return values to parent processes
+14. EMR
+    1. Elastic MapReduce
+    2. Helps creating Hadoop clusters for big data to analyse and process vast amount of data
+    3. Clusters can be made of EC2 instances
+    4. Supports Spark, HBase,Presto
+    5. EMR takes care of all the provisioning and configuration
+    6. Auto-scaling and integrated with spot instances
+    7. Use: data processing, ML, web indexing
+15. Opsworks
+    1. Perform server configuration automatically
+    2. It is Managed Chef & puppet
+    3. Work great with EC2 & on premise VM
+    4. It is alternative to AWS SSM
+    5. Managing configuration fo code
+    6. Chef - Recipes
+    7. Puppet - Manifests
+    8. Works across cloud
+16. ElasticTranscoder
+    1. Convert media files stored in S3 into various formats for tablets. PC, smartphone etc
+    2. Features 
+        1. Bit rate optimisation, thumbnail, watermarks
+    3. Components
+        1. Jobs 
+        2. Pipeline - Queue that manages the transcoding jobs
+        3. Presets - Template for converting media from one format to another
+        4. Notifications - eg SNS
+    4. Serverless, pay for what you use
+17. AWS workspaces
+    1. Managed , secure, Cloud desktop
+    2. Great to eliminate management of on-premise VDI
+    3. On demand, pay per usage
+    4. Integrated with Microsoft Active directory
+    5. Secure, encrypted, Network isolation
+18. AWS Appsync
+    1. Store and sync data cross mobile and web apps in real time
+    2. Makes use of GrapghQL
+    3. Client code can be generated automatically
+    4. Integrations with DynamoDB/Lambda
+    5. Real-time subscriptions
+    6. Offline data synchronisation (Replaces Cognito Sync)
+    7. Fine grained security
+19. Cost explorer
+    1. Visualise, understand and manage AWS cost and usage
+    2. Create custom reports
+    3. You can analyse both at high level eg total  cost and low level like monthly
+    4. You can choose saving plan
+    5. Forecast usage upto 12 months based on previous usage
+
