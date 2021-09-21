@@ -19,6 +19,7 @@
         1. EventBridge builds upon and extends Cloudwatch events
         2. Has extra bus feature and schema registry capability
         3. Later Cloudwatch events will be replaced with EventBridge
+    9. It has integration with third party applications also
 2. CloudTrail
     1. Way to get governance, compliance and audit for your AWS account
     2. It is enabled by default
