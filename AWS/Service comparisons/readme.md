@@ -11,3 +11,45 @@
     6. When you create a VPC endpoint service, AWS generates endpoint-specific DNS hostnames that you can use to communicate with the service. These names include the VPC endpoint ID, the Availability Zone name and Region Name, for example, vpce-1234-abcdev-us-east-1.vpce-svc-123345.us-east-1.vpce.amazonaws.com. By default, your consumers access the service with that DNS name
     7. When you create an endpoint, you can attach an endpoint policy to it that controls access to the related service
     8. An endpoint policy does not override or replace IAM user policies or service-specific policies (such as S3 bucket policies). It is a separate policy for controlling access from the endpoint to the specified service.
+2. Transit Gateway Vs VPC Peering
+    1. Transit Gateway solves the complexity involved with creating and managing multiple VPC peering connections at scale. While this makes TGW a good default for most network architectures, VPC peering is still a valid choice due to the following advantages it has over TGW:
+        * Lower cost — With VPC peering you only pay for data transfer charges. Transit Gateway has an hourly charge per attachment in addition to the data transfer fees. 
+        * No bandwidth limits — With Transit Gateway, Maximum bandwidth (burst) per VPC connection is 50 Gbps. VPC peering has no aggregate bandwidth. Individual instance network performance limits and flow limits (10 Gbps within a placement group and 5 Gbps otherwise) apply to both options. Only VPC peering supports placement groups. 
+        * Latency — Unlike VPC peering, Transit Gateway is an additional hop between VPCs. 
+        * Security Groups compatibility — Security groups referencing works with intra-Region VPC peering. It does not currently work with Transit Gateway. 
+    2. Within your Landing Zone setup, VPC Peering can be used in combination with the hub and spoke model enabled by Transit Gateway.
+    3. VPC Peering,
+        * Network connections between two VPCs
+        * Can connect VPCs in different AWS account.
+        * The AWS accounts can be in different AWS region(Inter-Region VPC Peering)
+        1. The Good Bites.
+            * Lowest cost options
+            * Pay only for data transfer
+            * No aggregate bandwidth limit.
+        2. Things to look out for
+            * VPC to VPC connections
+            * No transit routing
+            * Complex at scale
+            * Max 125 connections per VPC
+
+    4. Transit Gateway,
+        * Network connections between 1000's of VPC
+        * Remove complexity managing multiple connections
+        * Hub and spoke design for connecting VPC together
+        1. The Good Bites
+            * Simplified management of VPC connections.
+            * AWS manages the auto scaling and avability needs
+            * Supported 1000's of connections
+        2. Things to look out for
+            * Hourly charges per attachments in addition to data fees
+            * Max bandwidth burst to 50 Gbps
+            * Infra-region security groups don't support Transit Gateway
+    5. AWS Best Practice
+        1. AWS VPC Peering
+            * VPC peering should be used when the number of VPC's to be connected is less than 10.
+            * There is a Max limit 125 peering connections per VPC.
+        2. AWS Transit Gateway
+            * One transit gateway in a given region
+            * Place transit gateway in Network Service Account
+            * Use AWS Resource access manager to share a transit gateway for connecting VPCs access multiple account
+
