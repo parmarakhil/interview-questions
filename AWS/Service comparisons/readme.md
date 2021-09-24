@@ -52,4 +52,8 @@
             * One transit gateway in a given region
             * Place transit gateway in Network Service Account
             * Use AWS Resource access manager to share a transit gateway for connecting VPCs access multiple account
-
+3. DataSync Vs Storage gateway
+    1. One is for optimized data movement (DataSync), and the other is more suitable for hybrid architecture (Storage gateway).
+        * AWS DataSync is ideal for online data transfers. You can use DataSync to migrate active data to AWS, transfer data to the cloud for analysis and processing, archive data to free up on-premises storage capacity, or replicate data to AWS for business continuity. 
+        * AWS Storage Gateway is a hybrid cloud storage service that gives you on-premises access to virtually unlimited cloud storage.
+    2. You can combine both services. Use AWS DataSync to migrate existing data to Amazon S3, and then use the File Gateway configuration of AWS Storage Gateway to retain access to the migrated data and ongoing updates from your on-premises file-based applications.
