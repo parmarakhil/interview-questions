@@ -13,10 +13,10 @@
     8. An endpoint policy does not override or replace IAM user policies or service-specific policies (such as S3 bucket policies). It is a separate policy for controlling access from the endpoint to the specified service.
 2. Transit Gateway Vs VPC Peering
     1. Transit Gateway solves the complexity involved with creating and managing multiple VPC peering connections at scale. While this makes TGW a good default for most network architectures, VPC peering is still a valid choice due to the following advantages it has over TGW:
-        * Lower cost — With VPC peering you only pay for data transfer charges. Transit Gateway has an hourly charge per attachment in addition to the data transfer fees. 
-        * No bandwidth limits — With Transit Gateway, Maximum bandwidth (burst) per VPC connection is 50 Gbps. VPC peering has no aggregate bandwidth. Individual instance network performance limits and flow limits (10 Gbps within a placement group and 5 Gbps otherwise) apply to both options. Only VPC peering supports placement groups. 
-        * Latency — Unlike VPC peering, Transit Gateway is an additional hop between VPCs. 
-        * Security Groups compatibility — Security groups referencing works with intra-Region VPC peering. It does not currently work with Transit Gateway. 
+        * Lower cost — With VPC peering you only pay for data transfer charges. Transit Gateway has an hourly charge per attachment in addition to the data transfer fees.
+        * No bandwidth limits — With Transit Gateway, Maximum bandwidth (burst) per VPC connection is 50 Gbps. VPC peering has no aggregate bandwidth. Individual instance network performance limits and flow limits (10 Gbps within a placement group and 5 Gbps otherwise) apply to both options. Only VPC peering supports placement groups.
+        * Latency — Unlike VPC peering, Transit Gateway is an additional hop between VPCs.
+        * Security Groups compatibility — Security groups referencing works with intra-Region VPC peering. It does not currently work with Transit Gateway.
     2. Within your Landing Zone setup, VPC Peering can be used in combination with the hub and spoke model enabled by Transit Gateway.
     3. VPC Peering,
         * Network connections between two VPCs
@@ -54,7 +54,7 @@
             * Use AWS Resource access manager to share a transit gateway for connecting VPCs access multiple account
 3. DataSync Vs Storage gateway
     1. One is for optimized data movement (DataSync), and the other is more suitable for hybrid architecture (Storage gateway).
-        * AWS DataSync is ideal for online data transfers. You can use DataSync to migrate active data to AWS, transfer data to the cloud for analysis and processing, archive data to free up on-premises storage capacity, or replicate data to AWS for business continuity. 
+        * AWS DataSync is ideal for online data transfers. You can use DataSync to migrate active data to AWS, transfer data to the cloud for analysis and processing, archive data to free up on-premises storage capacity, or replicate data to AWS for business continuity.
         * AWS Storage Gateway is a hybrid cloud storage service that gives you on-premises access to virtually unlimited cloud storage.
     2. You can combine both services. Use AWS DataSync to migrate existing data to Amazon S3, and then use the File Gateway configuration of AWS Storage Gateway to retain access to the migrated data and ongoing updates from your on-premises file-based applications.
 4. Cloudwatch vs Cloudtrail
@@ -66,3 +66,24 @@
     6. CloudTrail helps you ensure compliance and regulatory standards.
     7. CloudWatch Events is a near real time stream of system events describing changes to your AWS resources. CloudTrail focuses more on AWS API calls made in your AWS account.
     8. Typically, CloudTrail delivers an event within 15 minutes of the API call. CloudWatch delivers metric data in 5 minutes periods for basic monitoring and 1 minute periods for detailed monitoring. The CloudWatch Logs Agent will send log data every five seconds by default.
+5. Security group Vs Network Access Control
+    1. Security groups 
+        1. Acts as a firewall for Associated EC2 instances
+        2. Controls both inbound and outbound traffic at the instance level
+        3. You can secure your VPC instances using only security groups
+        4. Supports allow rules only
+        5. It is stateful
+        6. Has separate inbound and outbound traffic
+        7. Evaluates all rules before deciding whether to allow or Deny traffic
+        8. A newly created security group denies all inbound traffic by default and allow all outbound traffic by default
+        9. Security groups are associated with network interfaces
+    2. Network access control list
+        1. Acts as a firewall for associated subnets
+        2. Controls both inbound and outbound traffic at the subnet level
+        3. They are an additional layer of security
+        4. They are stateless
+        5. Has separate rules for inbound and outbound traffic
+        6. A newly created nACL denies all inbound traffic by default and also deny all outbound traffic by default
+        7. Each subnet in your VPC must be associated with a network ACL. If none is associated, the Default NACL is selected
+        8. You can associate a network ACL with multiple subnets however a subnet can be associated with only one network ACL at a time
+
