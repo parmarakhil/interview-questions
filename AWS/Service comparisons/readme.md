@@ -86,4 +86,12 @@
         6. A newly created nACL denies all inbound traffic by default and also deny all outbound traffic by default
         7. Each subnet in your VPC must be associated with a network ACL. If none is associated, the Default NACL is selected
         8. You can associate a network ACL with multiple subnets however a subnet can be associated with only one network ACL at a time
+6. IAM policies VS Service Control Policies (SCP)
+    1. SCP are mainly used along with AWS Organisation while IAM policies operate at principal level
+    2. SCPs do not replace IAM policies, they do not provide actual permission like IAM policies. IAM policies are of two types
+        1. Identity based policies - attached to an IAM user, group or role
+        2. Resource based policies - attached to an AWS resource like S3 bucket
+    3. SCP takes precedence over IAM policies. Even if a principal is allowed to perform an action by IAM policy, an attached SCP can overrode that capability
+    4. IAM policies cannot be attached to AWS Organisation
+    5. In SCP you choose to either whitelist or blacklist a specific AWS service while an IAM policy can allow or deny actions. Access to any services that isn’t explicitly allowed by the SCP is denied to the AWS accounts associated with SCP. In IAM policy, an explicit allow overrides an implicit deny and an explicit deny overrides an explicit allow
 
