@@ -94,4 +94,19 @@
     3. SCP takes precedence over IAM policies. Even if a principal is allowed to perform an action by IAM policy, an attached SCP can overrode that capability
     4. IAM policies cannot be attached to AWS Organisation
     5. In SCP you choose to either whitelist or blacklist a specific AWS service while an IAM policy can allow or deny actions. Access to any services that isn’t explicitly allowed by the SCP is denied to the AWS accounts associated with SCP. In IAM policy, an explicit allow overrides an implicit deny and an explicit deny overrides an explicit allow
+7. Data pipeline Vs database migration service
+    1. AWS Data Pipeline helps you to process and move data (ETL) between S3, RDS, DynamoDB, EMR, On-premise data sources.
+        1. AWS Data Pipeline can create complex data processing workloads that are fault tolerant, repeatable, and highly available
+        2. AWS Data Pipeline launches required resources and tear them down after execution
+        3. REMEMBER : AWS Data Pipeline is NOT for streaming data!
+    2. AWS Database Migration Service is used to migrate databases to AWS while keeping source databases operational.
+        1. Two types of migrations:
+            1. Homogeneous Migrations (ex: Oracle to Oracle)
+            2. Heterogeneous Migrations (ex: Oracle to Amazon Aurora, MySQL to Amazon Aurora)
+        2. important characteristics:
+            1. Free for first 6 months when migrating to Aurora, Redshift or DynamoDB
+            2. (AFTER MIGRATION) You can keep databases in sync and pick right moment to switch
+        3. Important use cases:
+            1. Consolidate multiple databases into a single target database
+            2. Continuous Data Replication can be used for Disaster Recovery
 
