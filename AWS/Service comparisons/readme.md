@@ -109,4 +109,14 @@
         3. Important use cases:
             1. Consolidate multiple databases into a single target database
             2. Continuous Data Replication can be used for Disaster Recovery
+8. Aurora Vs Dynamodb
+    1. Aurora has concept of referential integrity I.e foreign keys while DynamoDB doesn’t have that
+    2. Aurora only has immediate consistency while in DynamoDB you can have eventual as well as immediate consistency
+    3. Aurora is a relational DBMS model while DynamoDB is Document store and key-value store
+    4. Aurora supports server-side scripting while dynamodb  doesn’t
+    5. In Aurora, portioning can be done with horizontal partitioning. DynamoDB supports sharing as partitioning method
+    6. Aurora supports SQL query language while dynamodb doesn’t
+    7. Aurora supports on one replication method - master-slave replication. DynamoDB supports replication methods
+    8. Aurora doesn’t offer API for user-defined Map/Reduce methods. DynamoDb also does not offers but maybe implemented via Amazon Elastic MapReduce
+
 
