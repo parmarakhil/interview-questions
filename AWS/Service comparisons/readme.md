@@ -118,5 +118,23 @@
     6. Aurora supports SQL query language while dynamodb doesn’t
     7. Aurora supports on one replication method - master-slave replication. DynamoDB supports replication methods
     8. Aurora doesn’t offer API for user-defined Map/Reduce methods. DynamoDb also does not offers but maybe implemented via Amazon Elastic MapReduce
-
+9. Scaling policies
+    1. Simple Scaling 
+        1. Simple scaling relies on a metric as a basis for scaling. 
+        2. For example, you can set a CloudWatch alarm to have a CPU Utilization threshold of 80%, and then set the scaling policy to add 20% more capacity to your Auto Scaling group by launching new instances. Accordingly, you can also set a CloudWatch alarm to have a CPU utilization threshold of 30%. When the threshold is met, the Auto Scaling group will remove 20% of its capacity by terminating EC2 instances. 
+    2. Target tracking
+        1. Target tracking policy lets you specify a scaling metric and metric value that your auto scaling group should maintain at all times. 
+        2. Let’s say for example your scaling metric is the average CPU utilization of your EC2 auto scaling instances, and that their average should always be 80%. When CloudWatch detects that the average CPU utilization is beyond 80%, it will trigger your target tracking policy to scale out the auto scaling group to meet this target utilization.
+        3. this type of policy assumes that it should scale out your Auto Scaling group when the specified metric is above the target value.
+        4. You cannot use a target tracking scaling policy to scale out your Auto Scaling group when the specified metric is below the target value.
+        5. The Auto Scaling group scales out proportionally to the metric as fast as it can, but scales in more gradually. 
+        6. Lastly, you can use AWS predefined metrics for your target tracking policy, or you can use other available CloudWatch metrics (native and custom). Predefined metrics include the following
+            1. ASGAverageCPUUtilization
+            2. ASGAverageNetworkIn
+            3. ASGAverageNetworkOut 
+            4. ALBRequestCountPerTarget
+    3. Step Scaling
+        1. Step Scaling further improves the features of simple scaling. Step scaling applies “step adjustments” which means you can set multiple actions to vary the scaling depending on the size of the alarm breach. 
+        2. When a scaling event happens on simple scaling, the policy must wait for the health checks to complete and the cooldown to expire before responding to an additional alarm. This causes a delay in increasing capacity especially when there is a sudden surge of traffic on your application.
+        3. With step scaling, the policy can continue to respond to additional alarms even in the middle of the scaling event.
 
