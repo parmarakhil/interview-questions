@@ -137,4 +137,13 @@
         1. Step Scaling further improves the features of simple scaling. Step scaling applies “step adjustments” which means you can set multiple actions to vary the scaling depending on the size of the alarm breach. 
         2. When a scaling event happens on simple scaling, the policy must wait for the health checks to complete and the cooldown to expire before responding to an additional alarm. This causes a delay in increasing capacity especially when there is a sudden surge of traffic on your application.
         3. With step scaling, the policy can continue to respond to additional alarms even in the middle of the scaling event.
+10. Parameter store Vs Secrets Manager
+    1. Parameter store is part of the application management tools offered by the AWS Systems Manager (SSM) service. Parameter Store allows you to create key-value parameters to save your application configurations, custom environment variables, product keys, and credentials on a single interface. 
+    2. Parameter Store allows you to secure your data by encryption which is integrated with AWS KMS.
+    3. Secrets manager enables you to rotate, manage, and retrieve database credentials, API keys and other secrets throughout their lifecycle. It also makes it really easy for you to follow security best practices such as encrypting secrets and rotating these regularly. 
+    4. Secrets Manager can offload the management of secrets from developers such as database passwords or API keys, so they don’t have to worry about where to store these credentials.
+    5. Parameter Store was designed to cater to a wider use case, not just secrets or passwords, but also application configuration variables like URLs, DB hostnames, custom settings, product keys, etc. which is why the default selection for creating a parameter is a plain text String value. You can enable encryption if you explicitly choose to. 
+    6. Secrets Manager was designed specifically for confidential information that needs to be encrypted, which is why encryption is always enabled when you create a secret. You can’t store data in plaintext in Secrets Manager.
+    7. Secrets Manager also provides a built-in password generator through the use of AWS CLI.
+
 
