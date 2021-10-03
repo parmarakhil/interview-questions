@@ -158,5 +158,15 @@
         2. Individual message delay. For example, you have a job queue and need to schedule individual jobs with a delay. With Amazon SQS, you can configure individual messages to have a delay of up to 15 minutes.
         3. Dynamically increasing concurrency/throughput at read time. For example, you have a work queue and want to add more readers until the backlog is cleared. With Amazon Kinesis Data Streams, you can scale up to a sufficient number of shards (note, however, that you'll need to provision enough shards ahead of time).
         4. Leveraging Amazon SQS’s ability to scale transparently. For example, you buffer requests and the load changes as a result of occasional load spikes or the natural growth of your business. Because each buffered request can be processed independently, Amazon SQS can scale transparently to handle the load without any provisioning instructions from you.
+12. EFS Vs FSx for lustre
+    1. EFS is is accessed by EC2 instances running inside one of your VPCs. Instances connect to a file system by using a network interface called a mount target. Each mount target has an IP address, which we assign automatically or you can specify.
+    2. Amazon EFS is designed to be highly durable and highly available. With Amazon EFS, there is no minimum fee or setup costs, and you pay only for what you use.
+    3. Amazon FSx for Lustre makes it easy and cost-effective to launch and run the world’s most popular high-performance file system. 
+    4. Allows your workloads to process data with consistent sub-millisecond latencies, up to hundreds of gigabytes per second of throughput, and up to millions of IOPS.
+    5. POSIX-compliant, so you can use your current Linux-based applications without having to make any changes, providing a native file system interface that works as any file system does with your Linux operating system.
+    6. File system data is automatically encrypted at-rest and in-transit.
+    7. Amazon FSx for Windows File Server provides simple, fully managed, highly reliable file storage that’s accessible over the industry-standard Server Message Block (SMB) protocol.	
+    8. Provides file storage that is accessible from Windows, Linux, and MacOS compute instances and devices running on AWS or on-premises.
+
 
 
