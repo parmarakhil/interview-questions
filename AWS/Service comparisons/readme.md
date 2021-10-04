@@ -31,7 +31,6 @@
             * No transit routing
             * Complex at scale
             * Max 125 connections per VPC
-
     4. Transit Gateway,
         * Network connections between 1000's of VPC
         * Remove complexity managing multiple connections
@@ -167,6 +166,13 @@
     6. File system data is automatically encrypted at-rest and in-transit.
     7. Amazon FSx for Windows File Server provides simple, fully managed, highly reliable file storage that’s accessible over the industry-standard Server Message Block (SMB) protocol.	
     8. Provides file storage that is accessible from Windows, Linux, and MacOS compute instances and devices running on AWS or on-premises.
+13. CloudFront Vs Global Accelerator 
+    1. CloudFront uses multiple sets of dynamically changing IP addresses while Global Accelerator will provide you a set of static IP addresses as a fixed entry point to your applications.
+    2. CloudFront pricing is mainly based on data transfer out and HTTP requests while Global Accelerator charges a fixed hourly fee and an incremental charge over your standard Data Transfer rates, also called a Data Transfer-Premium fee (DT-Premium).
+    3. CloudFront uses Edge Locations to cache content while Global Accelerator uses Edge Locations to find an optimal pathway to the nearest regional endpoint.
+    4. CloudFront is designed to handle HTTP protocol meanwhile Global Accelerator is best used for both HTTP and non-HTTP protocols such as TCP and UDP. 
+    5. Global Accelerator is used when for example you have a banking application that is scattered through multiple AWS regions and low latency is a must. Global Accelerator will route the user to the nearest edge location then route it to the nearest regional endpoint where your applications are hosted. 
+    6. CloudFront is used when for example you have some static content to be served to your users, in this case the content will be cached at the edge location and requests will be served from the cached edge location instead of your source region. This provides content with low latency
 
 
 
