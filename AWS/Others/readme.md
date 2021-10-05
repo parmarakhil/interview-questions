@@ -156,4 +156,25 @@
     3. You can analyse both at high level eg total  cost and low level like monthly
     4. You can choose saving plan
     5. Forecast usage upto 12 months based on previous usage
+20. AWS Support plans
+    1. There are 4 support plans
+        1. Basic
+        2. Developer
+        3. Business
+        4. Enterprise
+    2. The Basic Support plan is already available to all AWS customers by default and is free of charge. It also offers support for account and billing questions including requests for service limit increases. This AWS Support type includes the following:
+        1. Customer Service & Communities – You have 24×7 access to customer service, AWS documentation, whitepapers, and support forums.
+        2. AWS Trusted Advisor – This provides guidance on how to properly provision your AWS resources based on the best practices to further increase performance and improve the overall security of your cloud architecture. You are only provided access to the 7 core Trusted Advisor checks.
+        3. AWS Personal Health Dashboard – This is a personalized view of the health status of each AWS service that you currently have. It also provides an alert when your resources are impacted by an AWS-initiated activity.
+    3. With Business and Enterprise you get a TAM, A Technical Account Manager (TAM) is a technical point of contact who provides advocacy and guidance to assist you in planning and building solutions in AWS using industry best practices.
+    4. With Enterprise support plans you get additional support for
+        1. Infrastructure Event Management 
+        2. Architecture Support
+        3. White-glove case routing
+        4. Management business reviews
+        5. Concierge Support Team
+    5. If you are only experimenting, testing or doing a Proof of Concept (POC) in AWS, it is recommended that you choose the Developer plan. 
+    6. If you have production workloads running in AWS, it is suitable to opt for the Business plan. 
+    7. If you have mission-critical workloads, it is better to stick with an Enterprise plan because it provides the most efficient response times to support your systems
+
 
