@@ -173,6 +173,17 @@
     4. CloudFront is designed to handle HTTP protocol meanwhile Global Accelerator is best used for both HTTP and non-HTTP protocols such as TCP and UDP. 
     5. Global Accelerator is used when for example you have a banking application that is scattered through multiple AWS regions and low latency is a must. Global Accelerator will route the user to the nearest edge location then route it to the nearest regional endpoint where your applications are hosted. 
     6. CloudFront is used when for example you have some static content to be served to your users, in this case the content will be cached at the edge location and requests will be served from the cached edge location instead of your source region. This provides content with low latency
+14. Cognito User pools Vs Identity Pools
+    1. Amazon Cognito User Pools are used for authentication. You  have a way for to login using username/passwords or federated login using Identity Providers such as Amazon, Facebook, Google, or a SAML supported authentication such as Microsoft Active Directory.
+    2. With Cognito User Pools, you can provide sign-up and sign-in functionality for your mobile or web app users. 
+    3. You don’t have to build or maintain any server infrastructure on which users will authenticate. 
+    4. you can even use the pre-built login UI provided by Amazon Cognito which you just have to integrate on your application.
+    5. Cognito Identity Pools (Federated Identities) provides different functionality compared to User Pools.
+    6.  Identity Pools are used for User Authorization. You can create unique identities for your users and federate them with your identity providers.
+    7. Using identity pools, users can obtain temporary AWS credentials to access other AWS services. 
+    8. Identity Pools can be thought of as the actual mechanism authorizing access to AWS resources. 
+    9. When you create Identity Pools, think of it as defining who is allowed to get AWS credentials and use those credentials to access AWS resources.
+    10. You can define rules in Cognito Identity Pools for mapping users to different IAM roles to provide fine-grain permissions. 
 
 
 
