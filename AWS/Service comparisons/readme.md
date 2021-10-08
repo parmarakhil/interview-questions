@@ -207,6 +207,13 @@
     1. Transit Gateway establishes a hub and spoke model between VPCs, Direct Connects, etc
     2. A VPN CloudHub provides a hub and spoke model specifically for VPNs. It helps provide tunnels between your VPN links
     3. A VPN CloudHub is used in a more specific situation than transit gateway and is much simpler to setup for this specific solution
+17. ELB Vs ASG
+    1. ELB( Elastic Load Balancer ) distributes the traffic load evenly across the available EC2 instances present in the target groups and they ensure that they connect the traffic to appropriate Target Groups.
+    2. ELB also monitors the health of EC2 instances and routes the traffic to a healthy instance only. If it finds any unhealthy instance then it stops sending the request to that instance and makes sure that the data request is sent to some other available instance.
+    3. Hence the role of ELB is to just distribute the Traffic, check the health of instance and make sure that every request is connected to appropriate target groups.
+    4. Auto Scaling increases or decreases the no. of available instances as per the scaling policy mentioned, to manage the instances both in peak and off-peak hours.
+    5. It is the work of Auto-Scaling to increase the instance when the Threshold value is exceeded and to remove the instances when they are not being utilized.
+    6. This helps to ensure that the application faces low down time.
 
 
 
