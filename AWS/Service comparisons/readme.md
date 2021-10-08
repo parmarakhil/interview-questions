@@ -203,6 +203,10 @@
     16. Objects that are deleted, overwritten, or transitioned to a different storage class before the minimum duration will incur the normal usage charge plus a pro-rated request charge for the remainder of the minimum storage duration.
     17. Glacier has a per GB retrieval fee.
     18. You can transition objects from some S3 storage classes to another. Glacier objects can only be transitioned to the Glacier Deep Archive storage class.S3 (standard, intelligent-tiering, standard-IA, and one zone-IA) and Glacier are backed by an SLA. 
+16. CloudHub Vs Transit Gateway
+    1. Transit Gateway establishes a hub and spoke model between VPCs, Direct Connects, etc
+    2. A VPN CloudHub provides a hub and spoke model specifically for VPNs. It helps provide tunnels between your VPN links
+    3. A VPN CloudHub is used in a more specific situation than transit gateway and is much simpler to setup for this specific solution
 
 
 
