@@ -214,6 +214,15 @@
     4. Auto Scaling increases or decreases the no. of available instances as per the scaling policy mentioned, to manage the instances both in peak and off-peak hours.
     5. It is the work of Auto-Scaling to increase the instance when the Threshold value is exceeded and to remove the instances when they are not being utilized.
     6. This helps to ensure that the application faces low down time.
-
+18. Simple Workflow Service Vs Step Functions
+    1. Simple Workflow Service
+        1. A web service that makes it easy to coordinate work across distributed application components.
+        2. In Amazon SWF, tasks represent invocations of logical steps in applications. Tasks are processed by workers which are programs that interact with Amazon SWF to get tasks, process them, and return their results.
+        3. The coordination of tasks involves managing execution dependencies, scheduling, and concurrency in accordance with the logical flow of the application.
+    2. Step Functions
+        1. A fully managed service that makes it easy to coordinate the components of distributed applications and microservices using visual workflows.
+        2. You define state machines that describe your workflow as a series of steps, their relationships, and their inputs and outputs.
+        3. State machines contain a number of states, each of which represents an individual step in a workflow diagram. 
+        4. States can perform work, make choices, pass parameters, initiate parallel execution, manage timeouts, or terminate your workflow with a success or failure.
 
 
