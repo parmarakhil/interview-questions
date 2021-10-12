@@ -17,3 +17,19 @@
     4. The build specification is a YAML file that lets you choose the commands to run at each phase of the build and other settings. Without a build spec, CodeBuild cannot successfully convert your build input into build output or locate the build output artifact in the build environment to upload to your output bucket.
         1. If you include a build spec as part of the source code, by default, the build spec file must be named buildspec.yml and placed in the root of your source directory.
     5. A collection of input files is called build input artifacts or build input and a deployable version of a source code is called build output artifact or build output.
+3. Code Deploy
+    1. A fully managed deployment service that automates software deployments to a variety of compute services such as Amazon EC2, AWS Fargate, AWS Lambda, and your on-premises servers.
+    2. An Application is a name that uniquely identifies the application you want to deploy. CodeDeploy uses this name, which functions as a container, to ensure the correct combination of revision, deployment configuration, and deployment group are referenced during a deployment.
+    3. Compute platform is the platform on which CodeDeploy deploys an application (EC2, ECS, Lambda, On-premises servers).
+    4. Deployment configuration is a set of deployment rules and deployment success and failure conditions used by CodeDeploy during a deployment.
+    5. Deployment group contains individually tagged instances, Amazon EC2 instances in Amazon EC2 Auto Scaling groups, or both
+    6. A Revision for an AWS Lambda deployment is a YAML- or JSON-formatted application specification file (AppSpec file) that specifies information about the Lambda function to deploy. The revision can be stored in Amazon S3 buckets.
+    7. Target revision is the most recent version of the application revision that you have uploaded to your repository and want to deploy to the instances in a deployment group.
+    8. A deployment goes through a set of predefined phases called deployment lifecycle events. A deployment lifecycle event gives you an opportunity to run code as part of the deployment.
+        1. ApplicationStop
+        2. DownloadBundle
+        3. BeforeInstall
+        4. Install
+        5. AfterInstall
+        6. ApplicationStart
+        7. ValidateService
