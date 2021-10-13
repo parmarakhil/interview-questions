@@ -33,3 +33,21 @@
         5. AfterInstall
         6. ApplicationStart
         7. ValidateService
+4. Code Pipeline
+    1. A fully managed continuous delivery service that helps you automate your release pipelines for application and infrastructure updates.
+    2. You can easily integrate AWS CodePipeline with third-party services such as GitHub or with your own custom plugin. 
+    3. A pipeline defines your release process workflow, and describes how a new code change progresses through your release process.
+    4. A pipeline comprises a series of stages (e.g., build, test, and deploy), which act as logical divisions in your workflow. Each stage is made up of a sequence of actions, which are tasks such as building code or deploying to test environments.
+        1. Pipelines must have at least two stages. The first stage of a pipeline is required to be a source stage, and the pipeline is required to additionally have at least one other stage that is a build or deployment stage
+    5. A revision is a change made to the source location defined for your pipeline. It can include source code, build output, configuration, or data. A pipeline can have multiple revisions flowing through it at the same time.
+    6. A stage is a group of one or more actions. A pipeline can have two or more stages.
+    7. An action is a task performed on a revision. Pipeline actions occur in a specified order, in serial or in parallel, as determined in the configuration of the stage
+        1. You can add actions to your pipeline that are in an AWS Region different from your pipeline.
+        2. There are six types of actions
+            1. Source
+            2. Build
+            3. Test
+            4. Deploy
+            5. Approval
+            6. Invoke
+    8. An approval action prevents a pipeline from transitioning to the next action until permission is granted. This is useful when you are performing code reviews before code is deployed to the next stage.
