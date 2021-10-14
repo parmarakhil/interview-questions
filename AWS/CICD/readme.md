@@ -51,3 +51,26 @@
             5. Approval
             6. Invoke
     8. An approval action prevents a pipeline from transitioning to the next action until permission is granted. This is useful when you are performing code reviews before code is deployed to the next stage.
+5. Code Star
+    1. A cloud‑based software development service that provides the tools you need to quickly develop, build, and deploy applications on AWS.
+    2. CodeStar is commonly used along with CodeCommit, CodeBuild, CodeDeploy, and CodePipeline for a robust CI/CD toolchain.
+    3. Each AWS CodeStar project comes with a project management dashboard, including an integrated issue tracking capability that uses Atlassian JIRA Software.
+    4. AWS CodeStar provides you a variety of project templates to start developing applications on different compute platforms such as Amazon EC2, AWS Lambda, and AWS Elastic Beanstalk. Templates types include:
+        1. Web service – A web service is used for tasks that run in the background, such as calling APIs.
+        2. Web application – A web application features a UI. 
+        3. Static web page – For projects on an HTML website.
+        4. Alexa skill – For projects on an Alexa skill with an AWS Lambda function.
+        5. Config rule – Choose this template if you want a project for an AWS Config rule that lets you automate rules across AWS resources in your account.
+    5. AWS CodeStar projects supports the following programming languages:
+        1. Java
+        2. JavaScript
+        3. PHP
+        4. Ruby
+        5. Python
+        6. ASP.NET
+    6. AWS CodeStar includes an integrated development toolchain for your project. Team members push code, and changes are automatically deployed.
+    7. You can add users to your dashboard via IAM Users or email invite.
+    8. CodeStar Roles
+        1. Owner – Can add and remove team members, change the project dashboard, and delete the project.
+        2. Contributor – Can change the project dashboard and contribute code if the code is stored in CodeCommit, but cannot add or remove team members or delete the project.
+        3. Viewer – Can view the project dashboard, project code if the code is stored in CodeCommit, and the state of the project, but cannot move, add, or remove tiles from the project dashboard.
